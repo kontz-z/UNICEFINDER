@@ -18,4 +18,4 @@ O **UNICEFINDER** visa facilitar a busca e centralizar informações cruciais so
 * **Yan Victor Araújo Freire** — Desenvolvedor
 
 ## 🎥 Vídeo Pitch
-[![Vídeo Pitch]( dohttps://img.youtube.com/vi/SEU_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=SEU_VIDEO_ID)
+[![Vídeo Pitch]( dohttps://img.youtube.com/vi/pKPyqQ6gLaw?is=5v7L3MY0RoaPOcit/0.jpg)](https://www.youtube.com/watch?v=pKPyqQ6gLaw?is=5v7L3MY0RoaPOcit)
