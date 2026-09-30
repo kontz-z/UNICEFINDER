@@ -7,8 +7,8 @@ A UNICEFINDER é uma ferramenta criada com o objetivo de digitalizar e visa simp
   # UNICEFINDER
 </div>
 
-## 📝 Justificativa Resumida
-O **UNICEFINDER** visa facilitar a busca e centralizar informações cruciais sobre a comunidade universitária/acadêmica, proporcionando uma plataforma eficiente e intuitiva para os estudantes e colaboradores se encontrarem e acessarem recursos essenciais.
+## 📝 Justificativa 
+O **UNICEFINDER** visa facilitar a busca e centralizar informações cruciais sobre casos de achados e perdidos na comunidade universitária/acadêmica, proporcionando uma plataforma eficiente e intuitiva para os estudantes e colaboradores se encontrarem e acessarem recursos essenciais.
 
 ## 👥 Integrantes da Equipe
 * **Carlos Eduardo Santos Silva** — Gerente de Projeto
