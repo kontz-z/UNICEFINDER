@@ -1,0 +1,21 @@
+# Dependências
+node_modules/
+backend/node_modules/
+desktop/node_modules/
+
+# Build do desktop
+desktop/dist/
+
+# Uploads de fotos
+backend/uploads/
+
+# Variáveis de ambiente (contém senhas)
+backend/.env
+
+# Arquivos temporários
+*.log
+.DS_Store
+Thumbs.db
+
+# Scripts temporários
+backend/create-logs-table.js

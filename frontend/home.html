@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Feed de Itens</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <img src="assets/logo.jpeg" alt="UniceFinder" style="width: 32px; height: 32px; border-radius: 6px; object-fit: contain;">
+          <h1 class="header-title">UNICEFINDER</h1>
+        </div>
+        <div class="header-right">
+          <a href="scan.html" class="btn-icon-header" title="Escanear QR Code">
+            <span>📷</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Search & Stats Top Section -->
+      <section class="home-top-section">
+        <!-- Search Bar -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="search" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="Buscar por nome, local..." 
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar" id="statsBar">
+          <div class="stats-item">
+            <div class="stats-number" id="statToday">-</div>
+            <div class="stats-label">Itens Hoje</div>
+          </div>
+          <div class="stats-item">
+            <div class="stats-number" id="statReturns">-</div>
+            <div class="stats-label">Devoluções</div>
+          </div>
+          <div class="stats-item">
+            <div class="stats-number" id="statResolved">-</div>
+            <div class="stats-label">% Resolvidos</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter Tabs: Status -->
+      <div class="filter-tabs" id="statusFilterTabs">
+        <button type="button" class="filter-tab active" data-status="">Todos</button>
+        <button type="button" class="filter-tab" data-status="approved">Aguardando resposta</button>
+        <button type="button" class="filter-tab" data-status="collected">Devolvidos</button>
+        <button type="button" class="filter-tab" data-status="archived">Arquivados</button>
+      </div>
+
+      <!-- Category Chips -->
+      <div class="category-chips" id="categoryChips">
+        <button type="button" class="chip active" data-category="">Todos</button>
+        <button type="button" class="chip" data-category="1">📄 Documentos</button>
+        <button type="button" class="chip" data-category="2">📱 Eletrônicos</button>
+        <button type="button" class="chip" data-category="3">👜 Acessórios</button>
+        <button type="button" class="chip" data-category="4">📦 Outros</button>
+      </div>
+
+      <!-- Feed of Items -->
+      <main class="items-feed" id="itemsFeed">
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <div class="loading-text">Carregando itens...</div>
+        </div>
+      </main>
+
+      <!-- Floating Action Button (+) -->
+      <a href="new-item.html" class="fab-btn" title="Cadastrar Novo Item">
+        <span>+</span>
+      </a>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

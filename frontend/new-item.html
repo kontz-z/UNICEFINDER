@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Novo Item Encontrado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="btn-icon-header" id="backBtn" title="Voltar" onclick="history.back()">
+            <span>←</span>
+          </button>
+          <h1 class="header-title">Novo Item Encontrado</h1>
+        </div>
+      </header>
+
+      <!-- Form Content -->
+      <main style="padding: 20px 16px;">
+        <form id="newItemForm" novalidate>
+          
+          <!-- Photo Upload Area -->
+          <div class="form-group">
+            <label class="form-label">Foto do Item</label>
+            
+            <input 
+              type="file" 
+              id="photoInput" 
+              name="photo" 
+              accept="image/*" 
+              style="display: none;"
+            >
+
+            <!-- Upload Placeholder Box -->
+            <div class="photo-uploader" id="photoDropArea">
+              <div class="photo-uploader-icon">📷</div>
+              <div class="photo-uploader-text">Tirar foto ou selecionar da galeria</div>
+              <div class="photo-uploader-subtext">JPG, PNG ou WEBP</div>
+            </div>
+
+            <!-- Preview Box -->
+            <div class="photo-preview-wrap" id="photoPreviewWrap">
+              <img id="photoPreviewImg" class="photo-preview-img" alt="Prévia da foto">
+              <button type="button" class="photo-remove-btn" id="photoRemoveBtn" title="Remover imagem">✕</button>
+            </div>
+          </div>
+
+          <!-- Nome do Item -->
+          <div class="form-group">
+            <label for="name" class="form-label">Nome do Item <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              class="form-control" 
+              placeholder="Ex: Garrafa térmica azul, Chaveiro com 3 chaves..." 
+              required
+            >
+          </div>
+
+          <!-- Categoria -->
+          <div class="form-group">
+            <label for="category_id" class="form-label">Categoria <span class="required">*</span></label>
+            <select id="category_id" name="category_id" class="form-select" required>
+              <option value="" disabled selected>Selecione uma categoria...</option>
+              <option value="1">📄 Documentos</option>
+              <option value="2">📱 Eletrônicos</option>
+              <option value="3">👜 Acessórios</option>
+              <option value="4">📦 Outros</option>
+            </select>
+          </div>
+
+          <!-- Local Encontrado -->
+          <div class="form-group">
+            <label for="location_found" class="form-label">Local Encontrado <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="location_found" 
+              name="location_found" 
+              class="form-control" 
+              placeholder="Ex: Bloco E/F, Lab. 12, Pátio Central..." 
+              required
+            >
+          </div>
+
+          <!-- Data e Hora do Achado -->
+          <div class="form-group">
+            <label for="found_at" class="form-label">Data e Hora do Achado <span class="required">*</span></label>
+            <input 
+              type="datetime-local" 
+              id="found_at" 
+              name="found_at" 
+              class="form-control" 
+              required
+            >
+          </div>
+
+          <!-- Descrição -->
+          <div class="form-group">
+            <label for="description" class="form-label">Descrição Detalhada</label>
+            <textarea 
+              id="description" 
+              name="description" 
+              class="form-textarea" 
+              placeholder="Descreva detalhes como cor, marcas de uso, chaveiros, marcas ou adesivos para facilitar o reconhecimento pelo dono."
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="btn btn-primary btn-block" style="margin-top: 14px; padding: 14px;">
+            <span>Publicar Item</span>
+          </button>
+        </form>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/new-item.js"></script>
+</body>
+</html>

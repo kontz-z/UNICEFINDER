@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Escanear QR Code</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+  <!-- html5-qrcode Library from CDN -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="btn-icon-header" id="backBtn" title="Voltar" onclick="window.location.href='home.html'">
+            <span>←</span>
+          </button>
+          <h1 class="header-title">Escanear QR Code</h1>
+        </div>
+      </header>
+
+      <!-- Main Scanner Content -->
+      <main class="scanner-page-content">
+        
+        <!-- Camera Scanner Area -->
+        <div class="scanner-box" id="scannerBox">
+          <div id="reader"></div>
+        </div>
+
+        <p class="scanner-instructions">
+          Aponte a câmera para o QR Code impresso na etiqueta do item encontrado.
+        </p>
+
+        <!-- Inline Scanned Result Container -->
+        <div id="scannedResultContainer" style="display: none;"></div>
+
+        <!-- Manual ID Entry Fallback -->
+        <section class="manual-entry-card">
+          <div class="manual-entry-title">Não conseguiu ler o código? Digite o ID:</div>
+          <form id="manualEntryForm" class="manual-entry-form" onsubmit="event.preventDefault(); handleManualSearch();">
+            <input 
+              type="number" 
+              id="manualIdInput" 
+              class="form-control" 
+              placeholder="Ex: 12" 
+              min="1"
+              required
+            >
+            <button type="submit" class="btn btn-primary" style="white-space: nowrap;">
+              Buscar
+            </button>
+          </form>
+        </section>
+
+      </main>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/scan.js"></script>
+</body>
+</html>

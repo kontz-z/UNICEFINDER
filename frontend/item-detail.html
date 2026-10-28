@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Detalhes do Item</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- Top Bar with Back Button and Status Badge -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="btn-icon-header" id="backBtn" title="Voltar" onclick="history.back()">
+            <span>←</span>
+          </button>
+          <h1 class="header-title">Detalhes do Item</h1>
+        </div>
+        <div class="header-right" id="headerStatusBadge">
+          <!-- Dynamic Status Badge injected here -->
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <main id="itemDetailContainer">
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <div class="loading-text">Carregando detalhes do item...</div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/item-detail.js"></script>
+</body>
+</html>

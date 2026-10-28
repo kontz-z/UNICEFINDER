@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Painel do Funcionário</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button type="button" class="btn-icon-header" id="backBtn" title="Voltar" onclick="window.location.href='home.html'">
+            <span>←</span>
+          </button>
+          <h1 class="header-title">Painel do Funcionário</h1>
+        </div>
+        <div class="header-right">
+          <button type="button" class="btn-icon-header" id="refreshBtn" title="Atualizar listas">
+            <span>🔄</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Admin Navigation Tabs -->
+      <nav class="admin-header-tabs">
+        <button type="button" class="admin-tab-btn active" id="tabPendingItems" data-tab="items">
+          Itens Pendentes <span class="admin-tab-badge" id="itemsCountBadge" style="display: none;">0</span>
+        </button>
+        <button type="button" class="admin-tab-btn" id="tabPendingClaims" data-tab="claims">
+          Reivindicações <span class="admin-tab-badge" id="claimsCountBadge" style="display: none;">0</span>
+        </button>
+        <button type="button" class="admin-tab-btn" id="tabLogs" data-tab="logs">
+          📋 Logs
+        </button>
+      </nav>
+
+      <!-- Tab Content Area -->
+      <main class="admin-list" id="adminContent">
+        <div class="loading-container">
+          <div class="spinner"></div>
+          <div class="loading-text">Carregando solicitações pendentes...</div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

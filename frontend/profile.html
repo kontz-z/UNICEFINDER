@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Meu Perfil</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container has-bottom-nav">
+      
+      <!-- Profile Header Hero -->
+      <header class="profile-hero" id="profileHero">
+        <div class="profile-avatar-wrap">
+          <div class="avatar-initials-lg" id="profileInitials">UF</div>
+        </div>
+        <h2 class="profile-name" id="profileName">Carregando...</h2>
+        <div class="profile-dept" id="profileDept">-</div>
+        <div>
+          <span class="profile-badge-verified">
+            <span>✓</span> Perfil verificado
+          </span>
+        </div>
+      </header>
+
+      <!-- Stats Card -->
+      <section class="profile-stats-card">
+        <div class="profile-stat-col">
+          <div class="profile-stat-number" id="statPublished">-</div>
+          <div class="profile-stat-label">Publicados</div>
+        </div>
+        <div class="profile-stat-col">
+          <div class="profile-stat-number" id="statReturned">-</div>
+          <div class="profile-stat-label">Devolvidos</div>
+        </div>
+      </section>
+
+      <!-- Profile Menu List -->
+      <main class="profile-menu">
+        <div class="menu-item" id="menuMyItems" role="button" tabindex="0">
+          <div class="menu-item-left">
+            <span class="menu-item-icon">📦</span>
+            <span>Meus itens publicados</span>
+          </div>
+          <span class="menu-item-arrow">›</span>
+        </div>
+
+        <div class="menu-item" id="menuMyClaims" role="button" tabindex="0">
+          <div class="menu-item-left">
+            <span class="menu-item-icon">🤝</span>
+            <span>Histórico de devoluções</span>
+          </div>
+          <span class="menu-item-arrow">›</span>
+        </div>
+
+        <div class="menu-item" id="menuSettings" role="button" tabindex="0">
+          <div class="menu-item-left">
+            <span class="menu-item-icon">⚙️</span>
+            <span>Configurações</span>
+          </div>
+          <span class="menu-item-arrow">›</span>
+        </div>
+
+        <div class="menu-item logout" id="menuLogout" role="button" tabindex="0" style="margin-top: 8px;">
+          <div class="menu-item-left">
+            <span class="menu-item-icon">🚪</span>
+            <span>Sair da conta</span>
+          </div>
+          <span class="menu-item-arrow">›</span>
+        </div>
+      </main>
+
+      <!-- Dynamic Section for Items or Claims List -->
+      <section id="profileDetailsSection" style="padding: 16px; display: none;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+          <h3 id="sectionTitle" style="font-size: 1.05rem;"></h3>
+          <button type="button" class="btn btn-outline btn-sm" id="closeSectionBtn">Fechar</button>
+        </div>
+        <div id="sectionContent"></div>
+      </section>
+
+      <!-- Bottom Navigation -->
+      <div id="bottomNav"></div>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

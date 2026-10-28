@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>UNICEFINDER - Criar Conta</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+</head>
+<body>
+  <div class="app-wrapper">
+    <div class="app-container">
+      
+      <!-- Gradient Header Area -->
+      <header class="auth-hero">
+        <h1 class="logo-brand">UNICE<span>FINDER</span></h1>
+        <h2 class="hero-subtitle">Criar Conta</h2>
+        <p class="hero-desc">Junte-se à comunidade para cadastrar ou recuperar itens perdidos.</p>
+      </header>
+
+      <!-- Register Form Card -->
+      <main class="auth-card">
+        <form id="registerForm" novalidate>
+          <div class="form-group">
+            <label for="name" class="form-label">Nome Completo <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              class="form-control" 
+              placeholder="Ex: Ana Maria Silva" 
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">E-mail Institucional <span class="required">*</span></label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-control" 
+              placeholder="seu.nome@unice.br" 
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="department" class="form-label">Departamento / Curso <span class="required">*</span></label>
+            <input 
+              type="text" 
+              id="department" 
+              name="department" 
+              class="form-control" 
+              placeholder="Ex: Ciência da Computação, Biblioteca, etc." 
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Senha <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-control" 
+              placeholder="Mínimo 8 caracteres" 
+              minlength="8" 
+              required
+              autocomplete="new-password"
+            >
+            <div class="form-hint">Deve ter pelo menos 8 caracteres.</div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirmar Senha <span class="required">*</span></label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              name="confirmPassword" 
+              class="form-control" 
+              placeholder="Digite a senha novamente" 
+              minlength="8" 
+              required
+              autocomplete="new-password"
+            >
+          </div>
+
+          <button type="submit" id="registerBtn" class="btn btn-primary btn-block" style="margin-top: 10px;">
+            <span>Cadastrar</span>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 0.9rem;">
+          <p style="color: var(--text-light);">
+            Já tem uma conta? 
+            <a href="index.html" style="font-weight: 700;">Entrar</a>
+          </p>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <div id="globalModal" class="modal-backdrop"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
