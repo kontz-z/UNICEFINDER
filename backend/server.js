@@ -154,8 +154,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Inicialização do servidor HTTP
-app.listen(PORT, () => {
+// Inicialização do servidor HTTP (0.0.0.0 necessário para Railway/containers)
+const HOST = process.env.HOST || '0.0.0.0';
+app.listen(PORT, HOST, () => {
   console.log(`=======================================================`);
   console.log(`  UniceFinder Backend rodando na porta ${PORT}`);
   console.log(`  URL: http://localhost:${PORT}`);

@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "init-db": "node init-db.js"
+    "init-db": "node init-db.js",
+    "build": "cd ../desktop && npm install && npm run build",
+    "postinstall": "cd ../desktop && npm install && npm run build || echo 'Desktop build skipped'"
   },
   "dependencies": {
     "express": "^4.18.2",

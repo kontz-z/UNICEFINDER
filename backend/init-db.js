@@ -5,11 +5,11 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 async function initDatabase() {
-  const host = process.env.DB_HOST || 'localhost';
-  const port = parseInt(process.env.DB_PORT, 10) || 3306;
-  const user = process.env.DB_USER || 'admin';
-  const password = process.env.DB_PASSWORD || '123';
-  const dbName = process.env.DB_NAME || 'achados_perdidos';
+  const host = process.env.DB_HOST || process.env.MYSQLHOST || 'localhost';
+  const port = parseInt(process.env.DB_PORT || process.env.MYSQLPORT, 10) || 3306;
+  const user = process.env.DB_USER || process.env.MYSQLUSER || 'admin';
+  const password = process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || '123';
+  const dbName = process.env.DB_NAME || process.env.MYSQLDATABASE || 'achados_perdidos';
 
   console.log('-------------------------------------------------------');
   console.log(`[Init-DB] Iniciando configuração do banco de dados MySQL...`);
