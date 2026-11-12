@@ -1,10 +1,8 @@
-
-name: Deploy UNICEFINDER to GitHub Pages
+name: Deploy UNICEFINDER redirect
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,21 +19,39 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload frontend
+      - name: Create redirect page
+        run: |
+          mkdir -p public
+          cat > public/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta http-equiv="refresh" content="0;url=https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/">
+            <title>UNICEFINDER</title>
+            <script>
+              window.location.replace("https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/");
+            </script>
+          </head>
+          <body>
+            <p>Abrindo o UNICEFINDER...</p>
+            <a href="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/">Clique aqui se não redirecionar.</a>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend
+          path: public
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
