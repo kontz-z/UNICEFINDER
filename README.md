@@ -26,8 +26,6 @@ O processo tradicional de achados e perdidos pode apresentar dificuldades, como 
 
 Pensando nisso, o **UNICEFINDER** propõe uma alternativa digital que centraliza essas informações, tornando a busca por objetos mais prática, organizada e eficiente.
 
-A iniciativa busca contribuir para a comunicação entre os membros da comunidade acadêmica e facilitar a recuperação de pertences.
-
 ## 🎯 Objetivos
 
 - **Digitalização:** modernizar o processo de achados e perdidos.
@@ -41,8 +39,8 @@ A iniciativa busca contribuir para a comunicação entre os membros da comunidad
 | Integrante | Função | GitHub |
 |:---|:---|:---|
 | **Carlos Eduardo Santos Silva** | Gerente de Projeto | [@kontz-z](https://github.com/kontz-z) |
-| **Fillipi Gabriel Bezerra de Lima** | Designer UI/UX | — |
-| **José Eduardo de Almeida Araújo** | Desenvolvedor | — |
+| **Fillipi Gabriel Bezerra de Lima** | Designer UI/UX | [@fillipigabriel](https://github.com/fillipigabriel) |
+| **José Eduardo de Almeida Araújo** | Desenvolvedor | [@Eduardo-uniceplac](https://github.com/Eduardo-uniceplac) |
 | **Marcelo Henrique Vieira de Sousa** | Analista de Requisitos | [@codebysousa](https://github.com/codebysousa) |
 | **Yan Victor Araújo Freire** | Desenvolvedor | [@osepty](https://github.com/osepty) |
 
