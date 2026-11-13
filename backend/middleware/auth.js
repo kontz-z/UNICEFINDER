@@ -1,3 +1,4 @@
+
 const jwt = require('jsonwebtoken');
 
 /**
@@ -25,12 +26,15 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, secret);
+
     // Anexa as informações básicas do usuário na requisição
     req.user = {
       id: decoded.id,
       email: decoded.email,
-      role: decoded.role
+      role: decoded.role,
+      iat: decoded.iat
     };
+
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
@@ -38,6 +42,7 @@ const authenticate = (req, res, next) => {
         error: 'Sua sessão expirou. Por favor, faça login novamente.'
       });
     }
+
     return res.status(401).json({
       error: 'Token inválido ou não autorizado.'
     });
