@@ -119,7 +119,7 @@ async function loadUserItems() {
 
     content.innerHTML = items.map(item => {
       const photoUrl = formatPhotoUrl(item.photo_url);
-      const photoMarkup = photoUrl 
+      const photoMarkup = photoUrl
         ? `<img src="${escapeHtml(photoUrl)}" class="admin-card-thumb" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'admin-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:1.5rem;\\'>📦</div>';">`
         : `<div class="admin-card-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📦</div>`;
 
@@ -186,7 +186,7 @@ async function loadUserClaims() {
 
     content.innerHTML = claims.map(claim => {
       const photoUrl = formatPhotoUrl(claim.item_photo_url || claim.photo_url);
-      const photoMarkup = photoUrl 
+      const photoMarkup = photoUrl
         ? `<img src="${escapeHtml(photoUrl)}" class="admin-card-thumb" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\\'admin-card-thumb\\' style=\\'display:flex;align-items:center;justify-content:center;font-size:1.5rem;\\'>📦</div>';">`
         : `<div class="admin-card-thumb" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📦</div>`;
 
@@ -247,14 +247,30 @@ function handleLogout() {
     cancelText: 'Cancelar',
     isDanger: true,
     onConfirm: async () => {
+      // Calculate local session duration
+      const loginTime = localStorage.getItem('loginTime');
+      let durationText = '';
+      if (loginTime) {
+        const duration = Date.now() - parseInt(loginTime, 10);
+        durationText = formatSessionDuration(duration);
+      }
+
       try {
-        await apiRequest('/api/auth/logout', { method: 'POST' });
+        const response = await apiRequest('/api/auth/logout', { method: 'POST' });
+        // Use server duration if available, otherwise local
+        if (response.sessionDuration) {
+          durationText = formatSessionDuration(response.sessionDuration);
+        }
       } catch (e) { /* ignora erro de logout */ }
+
       clearAuth();
-      showToast('Sessão encerrada com sucesso.', 'info');
+      const msg = durationText
+        ? `Sessão encerrada. Duração: ${durationText}`
+        : 'Sessão encerrada com sucesso.';
+      showToast(msg, 'info');
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 600);
+      }, 1500);
     }
   });
 }

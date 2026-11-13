@@ -30,6 +30,9 @@ function getUser() {
 function setAuth(token, user) {
   if (token) localStorage.setItem('token', token);
   if (user) localStorage.setItem('user', JSON.stringify(user));
+  if (token && !localStorage.getItem('loginTime')) {
+    localStorage.setItem('loginTime', Date.now().toString());
+  }
 }
 
 /**
@@ -38,6 +41,21 @@ function setAuth(token, user) {
 function clearAuth() {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
+  localStorage.removeItem('loginTime');
+}
+
+/**
+ * Format session duration from milliseconds
+ */
+function formatSessionDuration(ms) {
+  if (!ms || ms < 0) return '';
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (hours > 0) return `${hours}h ${minutes}min`;
+  if (minutes > 0) return `${minutes}min ${seconds}s`;
+  return `${seconds}s`;
 }
 
 /**
