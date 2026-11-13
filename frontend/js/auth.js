@@ -64,12 +64,6 @@ async function handleLogin(e) {
     return;
   }
 
-  if (password.length < 8) {
-    showToast('A senha deve conter no mínimo 8 caracteres.', 'warning');
-    if (passwordInput) passwordInput.focus();
-    return;
-  }
-
   // Button loading state
   const originalBtnText = submitBtn.innerHTML;
   submitBtn.disabled = true;
@@ -138,8 +132,29 @@ async function handleRegister(e) {
     return;
   }
 
+  // Validação de força da senha
   if (!password || password.length < 8) {
     showToast('A senha deve ter no mínimo 8 caracteres.', 'warning');
+    if (passwordInput) passwordInput.focus();
+    return;
+  }
+  if (!/[A-Z]/.test(password)) {
+    showToast('A senha deve conter pelo menos uma letra maiúscula.', 'warning');
+    if (passwordInput) passwordInput.focus();
+    return;
+  }
+  if (!/[a-z]/.test(password)) {
+    showToast('A senha deve conter pelo menos uma letra minúscula.', 'warning');
+    if (passwordInput) passwordInput.focus();
+    return;
+  }
+  if (!/[0-9]/.test(password)) {
+    showToast('A senha deve conter pelo menos um número.', 'warning');
+    if (passwordInput) passwordInput.focus();
+    return;
+  }
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(password)) {
+    showToast('A senha deve conter pelo menos um caractere especial (!@#$%&*).', 'warning');
     if (passwordInput) passwordInput.focus();
     return;
   }

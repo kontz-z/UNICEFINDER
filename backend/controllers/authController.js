@@ -29,9 +29,30 @@ const register = async (req, res) => {
       });
     }
 
-    if (password.length < 6) {
+    // Validação de força da senha
+    if (password.length < 8) {
       return res.status(400).json({
-        error: 'A senha deve ter no mínimo 6 caracteres.'
+        error: 'A senha deve ter no mínimo 8 caracteres.'
+      });
+    }
+    if (!/[A-Z]/.test(password)) {
+      return res.status(400).json({
+        error: 'A senha deve conter pelo menos uma letra maiúscula.'
+      });
+    }
+    if (!/[a-z]/.test(password)) {
+      return res.status(400).json({
+        error: 'A senha deve conter pelo menos uma letra minúscula.'
+      });
+    }
+    if (!/[0-9]/.test(password)) {
+      return res.status(400).json({
+        error: 'A senha deve conter pelo menos um número.'
+      });
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(password)) {
+      return res.status(400).json({
+        error: 'A senha deve conter pelo menos um caractere especial (!@#$%&* etc).'
       });
     }
 
@@ -63,7 +84,7 @@ const register = async (req, res) => {
     const userId = result.insertId;
 
     // Gera o token JWT com expiração de 24 horas
-    const secret = process.env.JWT_SECRET || 'unicefinder_secret_key_2024_very_secure';
+    const secret = process.env.JWT_SECRET;
     const token = jwt.sign(
       { id: userId, email: trimmedEmail, role: userRole },
       secret,
@@ -141,7 +162,7 @@ const login = async (req, res) => {
     }
 
     // Gera token JWT válido por 24 horas
-    const secret = process.env.JWT_SECRET || 'unicefinder_secret_key_2024_very_secure';
+    const secret = process.env.JWT_SECRET;
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
       secret,

@@ -9,10 +9,25 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { showToast } = useToast();
 
+  const formatDuration = (ms) => {
+    if (!ms || ms < 0) return '';
+    const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    if (hours > 0) return `${hours}h ${minutes}min`;
+    if (minutes > 0) return `${minutes}min ${seconds}s`;
+    return `${seconds}s`;
+  };
+
   const handleLogout = async () => {
     try {
-      await logout();
-      showToast('Sessão encerrada com sucesso.', 'info');
+      const sessionDuration = await logout();
+      const durationText = formatDuration(sessionDuration);
+      const msg = durationText
+        ? `Sessão encerrada. Duração: ${durationText}`
+        : 'Sessão encerrada com sucesso.';
+      showToast(msg, 'info');
       navigate('/login');
     } catch (err) {
       console.error(err);

@@ -33,8 +33,24 @@ export default function Register() {
       return;
     }
 
-    if (formData.password.length < 6) {
-      setErrorMessage('A senha deve conter pelo menos 6 caracteres.');
+    if (formData.password.length < 8) {
+      setErrorMessage('A senha deve ter no mínimo 8 caracteres.');
+      return;
+    }
+    if (!/[A-Z]/.test(formData.password)) {
+      setErrorMessage('A senha deve conter pelo menos uma letra maiúscula.');
+      return;
+    }
+    if (!/[a-z]/.test(formData.password)) {
+      setErrorMessage('A senha deve conter pelo menos uma letra minúscula.');
+      return;
+    }
+    if (!/[0-9]/.test(formData.password)) {
+      setErrorMessage('A senha deve conter pelo menos um número.');
+      return;
+    }
+    if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?`~]/.test(formData.password)) {
+      setErrorMessage('A senha deve conter pelo menos um caractere especial (!@#$%&* etc).');
       return;
     }
 
@@ -152,7 +168,7 @@ export default function Register() {
                   id="password"
                   name="password"
                   type="password"
-                  placeholder="Mínimo 6 caracteres"
+                  placeholder="Ex: Senha@123"
                   value={formData.password}
                   onChange={handleChange}
                   required

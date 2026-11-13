@@ -33,6 +33,7 @@ export function AuthProvider({ children }) {
     const res = await api.login(email, password);
     setToken(res.token);
     setUser(res.user);
+    localStorage.setItem('loginTime', Date.now().toString());
     return res;
   };
 
@@ -44,12 +45,22 @@ export function AuthProvider({ children }) {
   };
 
   const handleLogout = async () => {
+    const loginTime = localStorage.getItem('loginTime');
+    let sessionDuration = null;
+    if (loginTime) {
+      sessionDuration = Date.now() - parseInt(loginTime, 10);
+    }
     try {
-      await api.logout();
+      const response = await api.logout();
+      if (response?.sessionDuration) {
+        sessionDuration = response.sessionDuration;
+      }
     } finally {
+      localStorage.removeItem('loginTime');
       setToken(null);
       setUser(null);
     }
+    return sessionDuration;
   };
 
   const refreshUser = async () => {
