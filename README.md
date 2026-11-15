@@ -1,63 +1,86 @@
-# 🔎 UNICEFINDER
+# UNICEFINDER
 
 <div align="center">
-  <img src="UNICEFINDER_logo.png" alt="Logo UNICEFINDER" width="200"/>
+  <img src="docs/assets/UNICEFINDER_logo.png" alt="Logo UNICEFINDER" width="180"/>
 
-  ### Sistema de Achados e Perdidos da UNICEPLAC
+  **Sistema de Achados e Perdidos da UNICEPLAC**
 
-  **Conectando pessoas aos seus pertences.**
+  Conectando pessoas aos seus pertences.
 
-  Uma solução digital para modernizar e simplificar o sistema de achados e perdidos no ambiente acadêmico.
-
-  **Projeto Acadêmico | UNICEPLAC**
+  **Versão Alpha 1.0 — v1.0.0-alpha**
 </div>
 
 ---
 
-## 📖 Sobre o Projeto
+## Sobre o projeto
 
-O **UNICEFINDER** é uma ferramenta desenvolvida para digitalizar e facilitar o processo de achados e perdidos na comunidade acadêmica da **UNICEPLAC**.
+O UNICEFINDER é uma aplicação acadêmica desenvolvida para digitalizar e centralizar o processo de achados e perdidos da comunidade da UNICEPLAC.
 
-O projeto busca oferecer um ambiente centralizado, acessível e intuitivo, permitindo que estudantes e colaboradores encontrem informações sobre objetos perdidos ou encontrados dentro da instituição.
+A plataforma permite consultar objetos encontrados, registrar itens e acompanhar o processo de recuperação.
 
-## 📝 Justificativa
+## Funcionalidades
 
-O processo tradicional de achados e perdidos pode apresentar dificuldades, como a falta de organização, a divulgação limitada e a dificuldade de localizar informações.
+- Cadastro e autenticação de usuários.
+- Consulta e cadastro de objetos encontrados.
+- Visualização dos detalhes dos itens.
+- Fluxo de reivindicação e acompanhamento.
+- Área administrativa e registros de atividades.
+- Interface web para desktop e interface mobile.
+- PWA instalável, com cache da interface para acesso offline limitado.
 
-Pensando nisso, o **UNICEFINDER** propõe uma alternativa digital que centraliza essas informações, tornando a busca por objetos mais prática, organizada e eficiente.
+> Operações que dependem da API e do banco de dados exigem conexão com a internet.
 
-## 🎯 Objetivos
+## Tecnologias
 
-- **Digitalização:** modernizar o processo de achados e perdidos.
-- **Centralização:** reunir informações em um único ambiente.
-- **Acessibilidade:** facilitar a consulta de objetos perdidos e encontrados.
-- **Organização:** proporcionar uma experiência simples e intuitiva.
-- **Comunicação:** aproximar estudantes e colaboradores na recuperação de pertences.
+| Camada | Tecnologias |
+|---|---|
+| Backend | Node.js, Express |
+| Banco de dados | MySQL |
+| Desktop | React, Vite |
+| Mobile | HTML, CSS, JavaScript |
+| PWA | Web App Manifest, Service Worker |
 
-## 👥 Integrantes da Equipe
+## Estrutura do repositório
 
-| Integrante | Função | GitHub |
-|:---|:---|:---|
-| **Carlos Eduardo Santos Silva** | Gerente de Projeto | [@kontz-z](https://github.com/kontz-z) |
-| **Fillipi Gabriel Bezerra de Lima** | Designer UI/UX | [@fillipigabriel](https://github.com/fillipigabriel) |
-| **José Eduardo de Almeida Araújo** | Desenvolvedor | [@Eduardo-uniceplac](https://github.com/Eduardo-uniceplac) |
-| **Marcelo Henrique Vieira de Sousa** | Analista de Requisitos | [@codebysousa](https://github.com/codebysousa) |
-| **Yan Victor Araújo Freire** | Desenvolvedor | [@osepty](https://github.com/osepty) |
+\`\`\`text
+UNICEFINDER/
+├── .github/
+│   └── workflows/
+├── backend/
+├── database/
+├── desktop/
+├── docs/
+│   ├── assets/
+│   ├── README.md
+│   ├── arquitetura.md
+│   ├── instalacao.md
+│   └── UNICEFINDER_visao.docx
+├── frontend/
+├── scripts/
+│   └── maintenance/
+├── .gitignore
+├── README.md
+├── nixpacks.toml
+└── railway.json
+\`\`\`
 
-## 🎥 Vídeo Pitch
 
-Conheça a proposta do UNICEFINDER através do nosso vídeo de apresentação.
+## Equipe
 
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=pKPyqQ6gLaw" target="_blank">
-    <img src="https://img.youtube.com/vi/pKPyqQ6gLaw/maxresdefault.jpg" alt="Assista ao vídeo pitch do UNICEFINDER" width="600"/>
-  </a>
+| Integrante | Responsabilidade | GitHub |
+|---|---|---|
+| Carlos Eduardo Santos Silva | Gerente de Projeto | [@kontz-z](https://github.com/kontz-z) |
+| Fillipi Gabriel Bezerra de Lima | Designer UI/UX | [@fillipigabriel](https://github.com/fillipigabriel) |
+| José Eduardo de Almeida Araújo | Desenvolvedor | [@Eduardo-uniceplac](https://github.com/Eduardo-uniceplac) |
+| Marcelo Henrique Vieira de Sousa | Analista de Requisitos | [@codebysousa](https://github.com/codebysousa) |
+| Yan Victor Araújo Freire | Desenvolvedor | [@osepty](https://github.com/osepty) |
 
-  **[▶️ Assistir ao Vídeo Pitch](https://www.youtube.com/watch?v=pKPyqQ6gLaw)**
-</div>
+## Vídeo pitch
+
+[Assistir ao vídeo de apresentação do UNICEFINDER](https://www.youtube.com/watch?v=pKPyqQ6gLaw)
 
 ---
 
 <div align="center">
-  <sub>Desenvolvido como projeto acadêmico por estudantes da UNICEPLAC.</sub>
+  <sub>Projeto acadêmico desenvolvido por estudantes da UNICEPLAC.</sub>
 </div>
