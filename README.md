@@ -40,29 +40,6 @@ A plataforma permite consultar objetos encontrados, registrar itens e acompanhar
 | Mobile | HTML, CSS, JavaScript |
 | PWA | Web App Manifest, Service Worker |
 
-## Estrutura do repositório
-
-\`\`\`text
-UNICEFINDER/
-├── .github/
-│   └── workflows/
-├── backend/
-├── database/
-├── desktop/
-├── docs/
-│   ├── assets/
-│   ├── README.md
-│   ├── arquitetura.md
-│   ├── instalacao.md
-│   └── UNICEFINDER_visao.docx
-├── frontend/
-├── scripts/
-│   └── maintenance/
-├── .gitignore
-├── README.md
-├── nixpacks.toml
-└── railway.json
-\`\`\`
 
 
 ## Equipe
