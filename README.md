@@ -7,7 +7,7 @@
 
   Conectando pessoas aos seus pertences.
 
-  **Versão Alpha 1.0 — v1.0.0-alpha**
+  **Versão Alpha 1.0 — v1.0-alpha**
 </div>
 
 ---
