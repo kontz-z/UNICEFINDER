@@ -1,4 +1,5 @@
-name: Deploy UNICEFINDER redirect
+
+name: Deploy UNICEFINDER status portal
 
 on:
   push:
@@ -25,7 +26,7 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Create redirect page
+      - name: Create status portal
         run: |
           mkdir -p public
           cat > public/index.html <<'EOF'
@@ -34,15 +35,81 @@ jobs:
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta http-equiv="refresh" content="0;url=https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/">
-            <title>UNICEFINDER</title>
-            <script>
-              window.location.replace("https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/");
-            </script>
+            <meta name="theme-color" content="#101014">
+            <title>UNICEFINDER | Central de acesso</title>
+            <style>
+              *{box-sizing:border-box}
+              body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#382027,transparent 55%),#101014;color:#f6f4f5;font-family:Inter,system-ui,sans-serif;display:flex;justify-content:center;padding:48px 18px}
+              main{width:min(760px,100%)}
+              header{text-align:center;margin:18px 0 34px}
+              .mark{width:54px;height:54px;margin:0 auto 16px;border:1px solid #71343d;border-radius:17px;display:grid;place-items:center;color:#ff737c;font-size:27px;font-weight:800;background:#26191e}
+              h1{font-size:clamp(28px,5vw,40px);letter-spacing:.12em;margin:0}
+              .sub{color:#a3a3ad;margin:10px 0 0;font-size:14px}
+              .summary{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:22px;color:#a3a3ad;font-size:12px}
+              .pulse,.dot{width:8px;height:8px;border-radius:50%;background:#f1b84b}
+              .cards{display:grid;gap:13px}
+              .site{display:flex;align-items:center;gap:16px;padding:19px;background:linear-gradient(135deg,#1d1d24,#17171c);border:1px solid #303039;border-radius:16px;text-decoration:none;color:inherit;transition:.18s}
+              .site:hover{border-color:#8e424b;transform:translateY(-2px);background:#211b20}
+              .symbol{flex:0 0 44px;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#29232a;color:#f17a82;font-size:20px}
+              .info{min-width:0;flex:1}
+              .name{font-weight:700;font-size:16px}
+              .desc{display:block;font-size:12px;color:#a3a3ad;margin-top:5px}
+              .status{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;padding:7px 10px;border-radius:99px;background:#29252a;color:#f1b84b;white-space:nowrap}
+              .online{color:#35c987;background:#172b24}
+              .offline{color:#f18a8a;background:#321f22}
+              .arrow{color:#85818b;font-size:20px}
+              footer{text-align:center;color:#777681;font-size:11px;margin-top:25px;line-height:1.7}
+              @media(max-width:540px){body{padding:28px 14px}.site{padding:15px 13px;gap:11px}.symbol{width:38px;height:38px;flex-basis:38px}.name{font-size:14px}.status{font-size:10px;padding:6px 8px}.arrow{display:none}}
+            </style>
           </head>
           <body>
-            <p>Abrindo o UNICEFINDER...</p>
-            <a href="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/">Clique aqui se não redirecionar.</a>
+            <main>
+              <header>
+                <div class="mark">U</div>
+                <h1>UNICEFINDER</h1>
+                <p class="sub">Central de acesso aos ambientes do projeto</p>
+                <div class="summary"><span class="pulse" id="summary-dot"></span><span id="summary-text">Verificando ambientes...</span></div>
+              </header>
+              <section class="cards">
+                <a class="site" href="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/api/health">
+                  <span class="symbol">⌂</span><span class="info"><span class="name">Squalid Orb</span><span class="desc">Ambiente original</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+                </a>
+                <a class="site" href="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/api/health">
+                  <span class="symbol">◇</span><span class="info"><span class="name">Musical Meme</span><span class="desc">Ambiente alternativo</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+                </a>
+                <a class="site" href="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/api/health">
+                  <span class="symbol">✦</span><span class="info"><span class="name">Studious Space Zebra</span><span class="desc">Ambiente atual</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+                </a>
+              </section>
+              <footer>Selecione um ambiente para abrir o sistema.<br>Status atualizado automaticamente a cada 30 segundos.</footer>
+            </main>
+            <script>
+              const cards=[...document.querySelectorAll("[data-health]")];
+              async function check(card){
+                const badge=card.querySelector("[data-status]");
+                const controller=new AbortController();
+                const timeout=setTimeout(()=>controller.abort(),8000);
+                try{
+                  const response=await fetch(card.dataset.health,{cache:"no-store",mode:"cors",signal:controller.signal});
+                  if(!response.ok)throw new Error();
+                  const data=await response.json();
+                  if(data.status!=="online")throw new Error();
+                  badge.className="status online";
+                  badge.innerHTML='<i class="dot"></i> ONLINE';
+                }catch(_){
+                  badge.className="status offline";
+                  badge.innerHTML='<i class="dot"></i> OFFLINE';
+                }finally{clearTimeout(timeout)}
+              }
+              async function refreshStatuses(){
+                await Promise.all(cards.map(check));
+                const online=document.querySelectorAll(".status.online").length;
+                document.getElementById("summary-text").textContent=online+" de 3 ambientes online";
+                document.getElementById("summary-dot").style.background=online?"#35c987":"#f18a8a";
+              }
+              refreshStatuses();
+              setInterval(refreshStatuses,30000);
+            </script>
           </body>
           </html>
           EOF
