@@ -1,4 +1,3 @@
-
 name: Deploy UNICEFINDER status portal
 
 on:
@@ -23,96 +22,598 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      - name: Prepare PWA assets
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+          mkdir -p public/assets
+
+          cp docs/assets/UNICEFINDER_logo.png public/assets/logo.png
+
+          magick public/assets/logo.png \
+            -thumbnail 420x420 \
+            -background '#24123f' \
+            -gravity center \
+            -extent 512x512 \
+            public/assets/icon-512.png
+
+          magick public/assets/logo.png \
+            -thumbnail 150x150 \
+            -background '#24123f' \
+            -gravity center \
+            -extent 192x192 \
+            public/assets/icon-192.png
+
       - name: Create status portal
         run: |
-          mkdir -p public
-          cat > public/index.html <<'EOF'
+          cat > public/index.html <<'HTML'
           <!DOCTYPE html>
           <html lang="pt-BR">
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="theme-color" content="#101014">
+            <meta name="theme-color" content="#170d2b">
+            <meta name="description" content="Central de acesso aos ambientes do UniceFinder.">
+
             <title>UNICEFINDER | Central de acesso</title>
+
+            <link rel="icon" href="./assets/logo.png">
+            <link rel="apple-touch-icon" href="./assets/icon-192.png">
+            <link rel="manifest" href="./manifest.webmanifest">
+
             <style>
               *{box-sizing:border-box}
-              body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#382027,transparent 55%),#101014;color:#f6f4f5;font-family:Inter,system-ui,sans-serif;display:flex;justify-content:center;padding:48px 18px}
+
+              body{
+                margin:0;
+                min-height:100vh;
+                background:
+                  radial-gradient(ellipse at 50% -15%,#43246b 0%,transparent 55%),
+                  #100b19;
+                color:#f7f2ff;
+                font-family:Inter,system-ui,sans-serif;
+                display:flex;
+                justify-content:center;
+                padding:48px 18px;
+              }
+
               main{width:min(760px,100%)}
-              header{text-align:center;margin:18px 0 34px}
-              .mark{width:54px;height:54px;margin:0 auto 16px;border:1px solid #71343d;border-radius:17px;display:grid;place-items:center;color:#ff737c;font-size:27px;font-weight:800;background:#26191e}
-              h1{font-size:clamp(28px,5vw,40px);letter-spacing:.12em;margin:0}
-              .sub{color:#a3a3ad;margin:10px 0 0;font-size:14px}
-              .summary{display:flex;align-items:center;justify-content:center;gap:9px;margin-top:22px;color:#a3a3ad;font-size:12px}
-              .pulse,.dot{width:8px;height:8px;border-radius:50%;background:#f1b84b}
+
+              header{
+                text-align:center;
+                margin:18px 0 34px;
+              }
+
+              .brand-logo{
+                width:76px;
+                height:76px;
+                margin:0 auto 17px;
+                padding:9px;
+                border:1px solid #7544a5;
+                border-radius:22px;
+                background:#24143a;
+                box-shadow:0 0 35px #7544a533;
+                object-fit:contain;
+              }
+
+              h1{
+                font-size:clamp(28px,5vw,40px);
+                letter-spacing:.12em;
+                margin:0;
+              }
+
+              .sub{
+                color:#b7a8ca;
+                margin:10px 0 0;
+                font-size:14px;
+              }
+
+              .summary{
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                gap:9px;
+                margin-top:22px;
+                color:#c4b5d8;
+                font-size:12px;
+              }
+
+              .pulse,.dot{
+                width:8px;
+                height:8px;
+                flex:0 0 8px;
+                border-radius:50%;
+                background:#e8b75a;
+              }
+
               .cards{display:grid;gap:13px}
-              .site{display:flex;align-items:center;gap:16px;padding:19px;background:linear-gradient(135deg,#1d1d24,#17171c);border:1px solid #303039;border-radius:16px;text-decoration:none;color:inherit;transition:.18s}
-              .site:hover{border-color:#8e424b;transform:translateY(-2px);background:#211b20}
-              .symbol{flex:0 0 44px;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:#29232a;color:#f17a82;font-size:20px}
+
+              .site{
+                display:flex;
+                align-items:center;
+                gap:16px;
+                padding:19px;
+                background:linear-gradient(135deg,#251b32,#1a1424);
+                border:1px solid #40304f;
+                border-radius:16px;
+                text-decoration:none;
+                color:inherit;
+                transition:.2s;
+              }
+
+              .site:hover{
+                border-color:#9b65d1;
+                transform:translateY(-2px);
+                background:#2a1d3a;
+                box-shadow:0 8px 25px #0003;
+              }
+
+              .symbol{
+                flex:0 0 44px;
+                width:44px;
+                height:44px;
+                border-radius:13px;
+                display:grid;
+                place-items:center;
+                background:#39264d;
+                color:#d5a5ff;
+                font-size:20px;
+              }
+
               .info{min-width:0;flex:1}
-              .name{font-weight:700;font-size:16px}
-              .desc{display:block;font-size:12px;color:#a3a3ad;margin-top:5px}
-              .status{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;padding:7px 10px;border-radius:99px;background:#29252a;color:#f1b84b;white-space:nowrap}
-              .online{color:#35c987;background:#172b24}
-              .offline{color:#f18a8a;background:#321f22}
-              .arrow{color:#85818b;font-size:20px}
-              footer{text-align:center;color:#777681;font-size:11px;margin-top:25px;line-height:1.7}
-              @media(max-width:540px){body{padding:28px 14px}.site{padding:15px 13px;gap:11px}.symbol{width:38px;height:38px;flex-basis:38px}.name{font-size:14px}.status{font-size:10px;padding:6px 8px}.arrow{display:none}}
+
+              .name{
+                font-weight:700;
+                font-size:16px;
+              }
+
+              .desc{
+                display:block;
+                font-size:12px;
+                color:#b7a8ca;
+                margin-top:5px;
+              }
+
+              .status{
+                display:inline-flex;
+                align-items:center;
+                gap:7px;
+                font-size:11px;
+                font-weight:700;
+                padding:7px 10px;
+                border-radius:99px;
+                background:#34283c;
+                color:#e8b75a;
+                white-space:nowrap;
+              }
+
+              .status .dot{background:#e8b75a}
+
+              .status.online{
+                color:#55dfa1;
+                background:#173528;
+              }
+
+              .status.online .dot{background:#35d995}
+
+              .status.offline{
+                color:#ff888e;
+                background:#392027;
+              }
+
+              .status.offline .dot{background:#ff626e}
+
+              .arrow{
+                color:#b49acb;
+                font-size:20px;
+              }
+
+              .install-area{
+                display:flex;
+                justify-content:center;
+                margin-top:24px;
+              }
+
+              #install-button{
+                display:none;
+                border:1px solid #9461c7;
+                border-radius:12px;
+                padding:12px 20px;
+                background:linear-gradient(135deg,#7541a8,#512a80);
+                color:white;
+                font-size:13px;
+                font-weight:700;
+                cursor:pointer;
+                transition:.2s;
+              }
+
+              #install-button:hover{
+                filter:brightness(1.15);
+                transform:translateY(-2px);
+              }
+
+              .install-help{
+                color:#a996bd;
+                font-size:11px;
+                text-align:center;
+                margin-top:10px;
+              }
+
+              footer{
+                text-align:center;
+                color:#9584a9;
+                font-size:11px;
+                margin-top:25px;
+                line-height:1.8;
+              }
+
+              @media(max-width:540px){
+                body{padding:28px 14px}
+                .site{padding:15px 13px;gap:11px}
+                .symbol{width:38px;height:38px;flex-basis:38px}
+                .name{font-size:14px}
+                .status{font-size:10px;padding:6px 8px}
+                .arrow{display:none}
+              }
             </style>
           </head>
+
           <body>
             <main>
               <header>
-                <div class="mark">U</div>
+                <img
+                  class="brand-logo"
+                  src="./assets/logo.png"
+                  alt="Logo oficial do UniceFinder"
+                >
+
                 <h1>UNICEFINDER</h1>
                 <p class="sub">Central de acesso aos ambientes do projeto</p>
-                <div class="summary"><span class="pulse" id="summary-dot"></span><span id="summary-text">Verificando ambientes...</span></div>
+
+                <div class="summary">
+                  <span class="pulse" id="summary-dot"></span>
+                  <span id="summary-text">Verificando ambientes...</span>
+                </div>
               </header>
-              <section class="cards">
-                <a class="site" href="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/api/health">
-                  <span class="symbol">⌂</span><span class="info"><span class="name">Squalid Orb</span><span class="desc">Ambiente original</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+
+              <section class="cards" id="environment-list">
+
+                <a class="site"
+                   href="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   data-health="https://squalid-orb-gxrqrpgg5jr6h96rp-3000.app.github.dev/api/health">
+
+                  <span class="symbol">⌂</span>
+                  <span class="info">
+                    <span class="name">Squalid Orb</span>
+                    <span class="desc">Ambiente original</span>
+                  </span>
+                  <span class="status" data-status>
+                    <i class="dot"></i> Verificando
+                  </span>
+                  <span class="arrow">↗</span>
                 </a>
-                <a class="site" href="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/api/health">
-                  <span class="symbol">◇</span><span class="info"><span class="name">Musical Meme</span><span class="desc">Ambiente alternativo</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+
+                <a class="site"
+                   href="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   data-health="https://musical-meme-w67x9w9xxpg3vg5q-3000.app.github.dev/api/health">
+
+                  <span class="symbol">◇</span>
+                  <span class="info">
+                    <span class="name">Musical Meme</span>
+                    <span class="desc">Ambiente alternativo</span>
+                  </span>
+                  <span class="status" data-status>
+                    <i class="dot"></i> Verificando
+                  </span>
+                  <span class="arrow">↗</span>
                 </a>
-                <a class="site" href="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/" target="_blank" rel="noopener noreferrer" data-health="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/api/health">
-                  <span class="symbol">✦</span><span class="info"><span class="name">Studious Space Zebra</span><span class="desc">Ambiente atual</span></span><span class="status" data-status><i class="dot"></i> Verificando</span><span class="arrow">↗</span>
+
+                <a class="site"
+                   href="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   data-health="https://studious-space-zebra-xr4q7xj9qq6pfp764-3000.app.github.dev/api/health">
+
+                  <span class="symbol">✦</span>
+                  <span class="info">
+                    <span class="name">Studious Space Zebra</span>
+                    <span class="desc">Ambiente atual</span>
+                  </span>
+                  <span class="status" data-status>
+                    <i class="dot"></i> Verificando
+                  </span>
+                  <span class="arrow">↗</span>
                 </a>
+
               </section>
-              <footer>Selecione um ambiente para abrir o sistema.<br>Status atualizado automaticamente a cada 30 segundos.</footer>
+
+              <div class="install-area">
+                <button id="install-button" type="button">
+                  ↓ Instalar UniceFinder
+                </button>
+              </div>
+
+              <p class="install-help" id="install-help"></p>
+
+              <footer>
+                Selecione um ambiente para abrir o sistema.<br>
+                Status atualizado automaticamente a cada 30 segundos.
+                <br><br>
+                UNICEFINDER · Central de acesso
+              </footer>
             </main>
+
             <script>
+              const list=document.getElementById("environment-list");
               const cards=[...document.querySelectorAll("[data-health]")];
+
               async function check(card){
                 const badge=card.querySelector("[data-status]");
                 const controller=new AbortController();
                 const timeout=setTimeout(()=>controller.abort(),8000);
+
+                badge.className="status";
+                badge.innerHTML='<i class="dot"></i> Verificando';
+
                 try{
-                  const response=await fetch(card.dataset.health,{cache:"no-store",mode:"cors",signal:controller.signal});
+                  const response=await fetch(card.dataset.health,{
+                    cache:"no-store",
+                    mode:"cors",
+                    signal:controller.signal
+                  });
+
                   if(!response.ok)throw new Error();
+
                   const data=await response.json();
                   if(data.status!=="online")throw new Error();
+
                   badge.className="status online";
                   badge.innerHTML='<i class="dot"></i> ONLINE';
+                  card.dataset.state="online";
+
                 }catch(_){
                   badge.className="status offline";
                   badge.innerHTML='<i class="dot"></i> OFFLINE';
-                }finally{clearTimeout(timeout)}
+                  card.dataset.state="offline";
+
+                }finally{
+                  clearTimeout(timeout);
+                }
               }
+
               async function refreshStatuses(){
                 await Promise.all(cards.map(check));
-                const online=document.querySelectorAll(".status.online").length;
-                document.getElementById("summary-text").textContent=online+" de 3 ambientes online";
-                document.getElementById("summary-dot").style.background=online?"#35c987":"#f18a8a";
+
+                const sorted=[...cards].sort((a,b)=>{
+                  const aOnline=a.dataset.state==="online"?1:0;
+                  const bOnline=b.dataset.state==="online"?1:0;
+                  return bOnline-aOnline;
+                });
+
+                sorted.forEach(card=>list.appendChild(card));
+
+                const online=cards.filter(
+                  card=>card.dataset.state==="online"
+                ).length;
+
+                const summary=document.getElementById("summary-text");
+                const dot=document.getElementById("summary-dot");
+
+                summary.textContent=online+" de 3 ambientes online";
+
+                dot.style.background=
+                  online===3?"#35d995":
+                  online===0?"#ff626e":
+                  "#e8b75a";
               }
+
               refreshStatuses();
               setInterval(refreshStatuses,30000);
+
+              let deferredPrompt=null;
+              const installButton=document.getElementById("install-button");
+              const installHelp=document.getElementById("install-help");
+
+              window.addEventListener("beforeinstallprompt",event=>{
+                event.preventDefault();
+                deferredPrompt=event;
+                installButton.style.display="block";
+              });
+
+              installButton.addEventListener("click",async()=>{
+                if(!deferredPrompt)return;
+
+                deferredPrompt.prompt();
+                await deferredPrompt.userChoice;
+                deferredPrompt=null;
+                installButton.style.display="none";
+              });
+
+              window.addEventListener("appinstalled",()=>{
+                installButton.style.display="none";
+                installHelp.textContent="UniceFinder instalado com sucesso!";
+              });
+
+              if("serviceWorker" in navigator){
+                window.addEventListener("load",()=>{
+                  navigator.serviceWorker.register("./sw.js")
+                    .catch(error=>console.error("Falha no Service Worker:",error));
+                });
+              }
+
+              const isStandalone=
+                window.matchMedia("(display-mode: standalone)").matches ||
+                window.navigator.standalone===true;
+
+              if(isStandalone){
+                installHelp.textContent="Aplicativo instalado";
+              }
             </script>
           </body>
           </html>
-          EOF
+          HTML
+
+      - name: Create PWA manifest
+        run: |
+          cat > public/manifest.webmanifest <<'JSON'
+          {
+            "id": "/UNICEFINDER/",
+            "name": "UniceFinder - Central de acesso",
+            "short_name": "UniceFinder",
+            "description": "Central de acesso aos ambientes do UniceFinder.",
+            "lang": "pt-BR",
+            "start_url": "/UNICEFINDER/",
+            "scope": "/UNICEFINDER/",
+            "display": "standalone",
+            "orientation": "any",
+            "background_color": "#100b19",
+            "theme_color": "#170d2b",
+            "icons": [
+              {
+                "src": "/UNICEFINDER/assets/icon-192.png",
+                "sizes": "192x192",
+                "type": "image/png",
+                "purpose": "any"
+              },
+              {
+                "src": "/UNICEFINDER/assets/icon-512.png",
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any"
+              }
+            ]
+          }
+          JSON
+
+      - name: Create Service Worker
+        run: |
+          cat > public/sw.js <<'JS'
+          const CACHE_NAME="unicefinder-portal-v1";
+          const BASE="/UNICEFINDER/";
+
+          const APP_FILES=[
+            BASE,
+            BASE+"index.html",
+            BASE+"offline.html",
+            BASE+"manifest.webmanifest",
+            BASE+"assets/logo.png",
+            BASE+"assets/icon-192.png",
+            BASE+"assets/icon-512.png"
+          ];
+
+          self.addEventListener("install",event=>{
+            event.waitUntil(
+              caches.open(CACHE_NAME)
+                .then(cache=>cache.addAll(APP_FILES))
+                .then(()=>self.skipWaiting())
+            );
+          });
+
+          self.addEventListener("activate",event=>{
+            event.waitUntil(
+              caches.keys()
+                .then(keys=>Promise.all(
+                  keys.filter(key=>key!==CACHE_NAME)
+                    .map(key=>caches.delete(key))
+                ))
+                .then(()=>self.clients.claim())
+            );
+          });
+
+          self.addEventListener("fetch",event=>{
+            const request=event.request;
+            const url=new URL(request.url);
+
+            if(request.method!=="GET" || url.origin!==self.location.origin){
+              return;
+            }
+
+            if(!url.pathname.startsWith(BASE)){
+              return;
+            }
+
+            if(request.mode==="navigate"){
+              event.respondWith(
+                fetch(request)
+                  .then(response=>{
+                    const copy=response.clone();
+                    caches.open(CACHE_NAME)
+                      .then(cache=>cache.put(BASE,copy));
+                    return response;
+                  })
+                  .catch(async()=>{
+                    return await caches.match(request)
+                      || await caches.match(BASE)
+                      || await caches.match(BASE+"offline.html");
+                  })
+              );
+              return;
+            }
+
+            event.respondWith(
+              caches.match(request).then(cached=>{
+                if(cached)return cached;
+
+                return fetch(request).then(response=>{
+                  if(response.ok){
+                    const copy=response.clone();
+                    caches.open(CACHE_NAME)
+                      .then(cache=>cache.put(request,copy));
+                  }
+                  return response;
+                });
+              })
+            );
+          });
+          JS
+
+      - name: Create offline page
+        run: |
+          cat > public/offline.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="theme-color" content="#170d2b">
+            <title>UniceFinder | Offline</title>
+            <style>
+              body{
+                margin:0;min-height:100vh;display:grid;place-items:center;
+                background:#100b19;color:#f7f2ff;
+                font-family:system-ui,sans-serif;text-align:center;padding:24px
+              }
+              main{max-width:420px}
+              img{width:90px;height:90px;object-fit:contain}
+              h1{color:#c69aff}
+              p{color:#b7a8ca;line-height:1.7}
+              a{color:#d5a5ff}
+            </style>
+          </head>
+          <body>
+            <main>
+              <img src="./assets/logo.png" alt="UniceFinder">
+              <h1>Você está offline</h1>
+              <p>
+                Não foi possível conectar à central neste momento.
+                Verifique sua conexão e tente novamente.
+              </p>
+              <a href="./">Tentar novamente</a>
+            </main>
+          </body>
+          </html>
+          HTML
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
